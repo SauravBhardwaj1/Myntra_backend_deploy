@@ -1,7 +1,7 @@
 const express = require('express');
 const { userRoutes } = require('./Routes/userRoutes');
 const { productRoutes } = require('./Routes/productRoutes');
-const {cartRoutes } = require('./Routes/cartRoutes')
+
 const { connection } = require('./config/db');
 const { authenticate } = require('./middleware/auth.middleware');
 const cors = require("cors")
@@ -14,6 +14,8 @@ app.use(express.json())
 const swaggerJSDoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
 const { adminRoutes } = require('./Routes/adminRoutes');
+const {cartRoutes} = require('./Routes/cart.Routes');
+
 
 const swaggerDefinition = {
     openapi: '3.0.0',
