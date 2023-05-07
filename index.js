@@ -62,7 +62,7 @@ app.use(cors())
 
 app.use("/users", userRoutes);
 
-//app.use(authenticate)
+app.use(authenticate)
 
 
 app.use("/products", productRoutes);
