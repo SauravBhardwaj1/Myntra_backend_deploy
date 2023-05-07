@@ -5,8 +5,13 @@ const { userModel } = require('../model/userModel');
 
 const userRoutes = express.Router()
 
-userRoutes.get("/", (req, res) => {
-    res.send("welcome");
+userRoutes.get("/", async(req, res) => {
+   try {
+    const data = userModel.find()
+    res.status(200).send(data)
+   } catch (error) {
+     res.status(400).send({"err":error.message})
+   }
 });
 
 
@@ -87,7 +92,7 @@ userRoutes.get("/", (req, res) => {
  */
 
 userRoutes.post("/register",async(req,res)=>{
-    const {username,email,password,city,age} = req.body
+    const {name,email,password,role} = req.body
     try {
         const emailCheck = await userModel.findOne({email})
         if(emailCheck){
@@ -95,11 +100,10 @@ userRoutes.post("/register",async(req,res)=>{
         }else{
             bcrypt.hash(password, 5, async(err,hash)=>{
                 const newUser = new userModel({
-                    username,
+                    name,
                     email,
                     password:hash,
-                    city,
-                    age
+                    role
                 })
                 await newUser.save()
                 res.status(200).send({"msg":"User registered successfully"})
@@ -153,6 +157,9 @@ userRoutes.post("/login",async(req,res)=>{
         res.status(400).send({"err":error.message})
     }
 })
+
+
+
 
 
 module.exports = {userRoutes}
